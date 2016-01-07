@@ -4,13 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * ArticleAnswer
+ * ArticleRating
  *
- * @ORM\Table("article_answers")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleAnswerRepository")
+ * @ORM\Table("ratings")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRatingRepository")
  */
-class ArticleAnswer
+class ArticleRating
 {
     /**
      * @var integer
@@ -22,26 +24,33 @@ class ArticleAnswer
     private $id;
 
     /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="answers")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-
-    /**
-     * @var string
+     * 
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      minMessage = "You must add a positive number",
+     *      maxMessage = "You cannot rate more than {{ limit }}"
+     * )
+     * @var integer
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="rating", type="integer")
      */
-    private $content;
+    private $rating;
     
     /**
      *
      * @var Article
-     * @ORM\ManyToOne(targetEntity="Article", inversedBy="answers")
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="ratings")
      * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
      */
     private $article;
+    
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="ratings")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
     
     /**
      * @var \DateTime $created
@@ -70,27 +79,27 @@ class ArticleAnswer
     }
 
     /**
-     * Set content
+     * Set rating
      *
-     * @param string $content
+     * @param integer $rating
      *
-     * @return ArticleAnswer
+     * @return ArticleRating
      */
-    public function setContent($content)
+    public function setRating($rating)
     {
-        $this->content = $content;
+        $this->rating = $rating;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get rating
      *
-     * @return string
+     * @return integer
      */
-    public function getContent()
+    public function getRating()
     {
-        return $this->content;
+        return $this->rating;
     }
 
     /**
@@ -98,7 +107,7 @@ class ArticleAnswer
      *
      * @param \DateTime $created
      *
-     * @return ArticleAnswer
+     * @return ArticleRating
      */
     public function setCreated($created)
     {
@@ -122,7 +131,7 @@ class ArticleAnswer
      *
      * @param \DateTime $updated
      *
-     * @return ArticleAnswer
+     * @return ArticleRating
      */
     public function setUpdated($updated)
     {
@@ -146,7 +155,7 @@ class ArticleAnswer
      *
      * @param \AppBundle\Entity\Article $article
      *
-     * @return ArticleAnswer
+     * @return ArticleRating
      */
     public function setArticle(\AppBundle\Entity\Article $article = null)
     {
@@ -170,7 +179,7 @@ class ArticleAnswer
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return ArticleAnswer
+     * @return ArticleRating
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {

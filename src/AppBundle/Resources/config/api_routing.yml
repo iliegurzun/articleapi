@@ -1,0 +1,12 @@
+api_article:
+    type: rest
+    resource: "AppBundle\Controller\ArticleController"
+    name_prefix:  api_
+api_article_answer:
+    type: rest
+    resource: "AppBundle\Controller\AnswerController"
+    name_prefix:  api_
+api_article_rating:
+    type: rest
+    resource: "AppBundle\Controller\RatingController"
+    name_prefix:  api_

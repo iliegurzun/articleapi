@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: doctrine_extensions.yml }
 
 framework:
     #esi:             ~
@@ -75,3 +76,28 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User
+
+#Nelmio Api DOC Configuration
+nelmio_api_doc: ~
+
+#FOS Rest Configuration
+fos_rest:
+    body_listener: true
+    param_fetcher_listener: true
+    view:
+        formats:
+            json: true
+            html: false
+        view_response_listener: 'force'
+    format_listener:
+        rules:
+            - { path: ^/api/doc, priorities: [ html ], fallback_format: html, prefer_extension: false }
+            - { path: ^/api, priorities: [ json ], fallback_format: json, prefer_extension: false }
+            - { path: ^/, priorities: [ html ], fallback_format: html, prefer_extension: false }
+            
+jms_serializer:
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/serializer/FOSUB"

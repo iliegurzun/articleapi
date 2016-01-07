@@ -5,6 +5,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity
@@ -84,73 +85,5 @@ class User extends BaseUser
     public function getArticles()
     {
         return $this->articles;
-    }
-
-    /**
-     * Add rating
-     *
-     * @param \AppBundle\Entity\ArticleRating $rating
-     *
-     * @return User
-     */
-    public function addRating(\AppBundle\Entity\ArticleRating $rating)
-    {
-        $this->ratings[] = $rating;
-
-        return $this;
-    }
-
-    /**
-     * Remove rating
-     *
-     * @param \AppBundle\Entity\ArticleRating $rating
-     */
-    public function removeRating(\AppBundle\Entity\ArticleRating $rating)
-    {
-        $this->ratings->removeElement($rating);
-    }
-
-    /**
-     * Get ratings
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRatings()
-    {
-        return $this->ratings;
-    }
-
-    /**
-     * Add answer
-     *
-     * @param \AppBundle\Entity\ArticleAnswer $answer
-     *
-     * @return User
-     */
-    public function addAnswer(\AppBundle\Entity\ArticleAnswer $answer)
-    {
-        $this->answers[] = $answer;
-
-        return $this;
-    }
-
-    /**
-     * Remove answer
-     *
-     * @param \AppBundle\Entity\ArticleAnswer $answer
-     */
-    public function removeAnswer(\AppBundle\Entity\ArticleAnswer $answer)
-    {
-        $this->answers->removeElement($answer);
-    }
-
-    /**
-     * Get answers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
     }
 }

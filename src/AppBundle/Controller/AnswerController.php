@@ -24,7 +24,7 @@ class AnswerController extends FOSRestController
      */
     public function postAnswerAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository('AppBundle:User');
         $articleRepository = $em->getRepository('AppBundle:Article');
         $answer = new ArticleAnswer();

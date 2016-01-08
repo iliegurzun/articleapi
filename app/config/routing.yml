@@ -7,3 +7,6 @@ fos_user:
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+client_article:
+    path: /create-article
+    defaults: { _controller: AppBundle:Client:createArticle }

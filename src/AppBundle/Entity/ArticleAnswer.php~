@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * ArticleAnswer
  *
- * @ORM\Table()
+ * @ORM\Table("article_answers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleAnswerRepository")
  */
 class ArticleAnswer
@@ -58,6 +58,13 @@ class ArticleAnswer
      * @ORM\Column(type="datetime")
      */
     private $updated;
+    
+    /**
+     *
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $emailSent = false;
 
     /**
      * Get id
@@ -163,5 +170,29 @@ class ArticleAnswer
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return ArticleAnswer
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

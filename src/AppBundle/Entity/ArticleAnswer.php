@@ -58,6 +58,13 @@ class ArticleAnswer
      * @ORM\Column(type="datetime")
      */
     private $updated;
+    
+    /**
+     *
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $emailSent = false;
 
     /**
      * Get id
@@ -187,5 +194,29 @@ class ArticleAnswer
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set emailSent
+     *
+     * @param boolean $emailSent
+     *
+     * @return ArticleAnswer
+     */
+    public function setEmailSent($emailSent)
+    {
+        $this->emailSent = $emailSent;
+
+        return $this;
+    }
+
+    /**
+     * Get emailSent
+     *
+     * @return boolean
+     */
+    public function getEmailSent()
+    {
+        return $this->emailSent;
     }
 }

@@ -4,11 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ArticleRating
  *
- * @ORM\Table("rating")
+ * @ORM\Table("ratings")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticleRatingRepository")
  */
 class ArticleRating
@@ -23,6 +24,13 @@ class ArticleRating
     private $id;
 
     /**
+     * 
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      minMessage = "You must add a positive number",
+     *      maxMessage = "You cannot rate more than {{ limit }}"
+     * )
      * @var integer
      *
      * @ORM\Column(name="rating", type="integer")
@@ -59,6 +67,13 @@ class ArticleRating
      * @ORM\Column(type="datetime")
      */
     private $updated;
+    
+    /**
+     *
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $emailSent = false;
 
     /**
      * Get id

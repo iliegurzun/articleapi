@@ -1,0 +1,56 @@
+<?php
+
+if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
+    passthru(sprintf(
+        'php "%s/console" cache:clear --env=%s --no-warmup',
+        __DIR__,
+        $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV']
+    ));
+}
+
+require_once __DIR__.'/bootstrap.php.cache';
+require_once __DIR__.'/AppKernel.php';
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Input\ArrayInput;
+
+use Doctrine\Bundle\DoctrineBundle\Command\DropDatabaseDoctrineCommand;
+use Doctrine\Bundle\DoctrineBundle\Command\CreateDatabaseDoctrineCommand;
+//use update
+
+$kernel = new AppKernel('test', true); // create a "test" kernel
+$kernel->boot();
+
+$application = new Application($kernel);
+
+// add the database:drop command to the application and run it
+$command = new Doctrine\Bundle\DoctrineBundle\Command\DropDatabaseDoctrineCommand();
+$application->add($command);
+$input = new ArrayInput(array(
+    'command' => 'doctrine:database:drop',
+    '--force' => true,
+));
+$command->run($input, new \Symfony\Component\Console\Output\ConsoleOutput());
+
+// add the database:create command to the application and run it
+$command = new Doctrine\Bundle\DoctrineBundle\Command\CreateDatabaseDoctrineCommand();
+$application->add($command);
+$input = new ArrayInput(array(
+    'command' => 'doctrine:database:create',
+));
+$command->run($input, new \Symfony\Component\Console\Output\ConsoleOutput());
+
+
+// add the doctrine:schema:update command to the application and run it
+$connection = $kernel->getContainer()->get('doctrine')->getConnection($input->getOption('connection'));
+$connection->close();
+$command = new Doctrine\Bundle\DoctrineBundle\Command\Proxy\UpdateSchemaDoctrineCommand();
+$application->add($command);
+$input = new ArrayInput(array(
+    'command' => 'doctrine:schema:update',
+    '--force' => true,
+    '--em'    => 'default',
+    '--env'   => 'test'
+));
+$command->run($input, new \Symfony\Component\Console\Output\ConsoleOutput());

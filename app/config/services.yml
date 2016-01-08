@@ -4,6 +4,13 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.user_notification:
+        class: AppBundle\Service\UserNotification
+        calls:
+            - [setEntityManager, ['@doctrine.orm.entity_manager']]
+            - [setTwig, ['@twig']]
+            - [setMailer, ['@mailer']]
+    app.api_client:
+        class: AppBundle\Service\ApiClientService
+        calls:
+            - [setApiHost, ['%api_host%']]

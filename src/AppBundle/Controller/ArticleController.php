@@ -20,17 +20,17 @@ class ArticleController extends FOSRestController
      * @ApiDoc(
      *   resource = true,
      *   description = "Gets a Answer for a given slug",
-     *   output = "Ibw\DamamiBundle\Entity\Answer",
+     *   output = "AppBundle\Entity\Article",
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the Answer is not found"
+     *     404 = "Returned when the Article is not found"
      *   }
      * )
      *
      * @Rest\View
-     * @param string $id the Answer's slug
+     * @param string $id the Article's slug
      *
-     * @return Answer
+     * @return Article
      *
      * @throws NotFoundException when Article not exist
      */
@@ -56,7 +56,7 @@ class ArticleController extends FOSRestController
      */
     public function postArticleAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository('AppBundle:User');
         $article = new Article();
 

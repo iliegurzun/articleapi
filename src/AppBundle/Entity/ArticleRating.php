@@ -67,6 +67,13 @@ class ArticleRating
      * @ORM\Column(type="datetime")
      */
     private $updated;
+    
+    /**
+     *
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $emailSent = false;
 
     /**
      * Get id
@@ -196,5 +203,29 @@ class ArticleRating
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set emailSent
+     *
+     * @param boolean $emailSent
+     *
+     * @return ArticleRating
+     */
+    public function setEmailSent($emailSent)
+    {
+        $this->emailSent = $emailSent;
+
+        return $this;
+    }
+
+    /**
+     * Get emailSent
+     *
+     * @return boolean
+     */
+    public function getEmailSent()
+    {
+        return $this->emailSent;
     }
 }

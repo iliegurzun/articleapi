@@ -24,7 +24,7 @@ class RatingController extends FOSRestController
      */
     public function postRatingAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $userRepository = $em->getRepository('AppBundle:User');
         $articleRepository = $em->getRepository('AppBundle:Article');
         $rating = new ArticleRating();

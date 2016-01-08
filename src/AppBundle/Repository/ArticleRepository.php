@@ -10,4 +10,20 @@ namespace AppBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+    
+    public function findWithNotifications($date)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->leftJoin('a.answers', 'ans')
+            ->leftJoin('a.ratings', 'r')
+            ->where('a.created < :date')
+            ->orHaving('COUNT(ans) > 0')
+            ->orHaving('COUNT(r) > 0')
+            ->setParameter('date', $date)
+            ->groupBy('a.author')
+        ;
+        
+        return $qb->getQuery()->execute();
+    }
 }
